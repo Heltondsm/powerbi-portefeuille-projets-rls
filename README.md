@@ -1,4 +1,4 @@
-# Suivi de 104 projets dans 52 pays — Power BI
+# Portefeuille de 104 projets dans 52 pays — Power BI et sécurité par rôle
 
 Trois niveaux de direction, un seul rapport : chacun voit son périmètre et reçoit une alerte
 dès qu'un projet dérape de plus de 15 % sur les coûts, les délais ou les livrables.
@@ -99,7 +99,7 @@ visuel personnalisé (diagramme de Gantt) · page d'infobulle
 
 ```
 captures/                              une image par onglet
-suivi-projets-sanitoral.pbix     le rapport, ouvrable dans Power BI Desktop
+portefeuille-projets-sanitoral.pbix    le rapport, ouvrable dans Power BI Desktop
 ```
 
 ## D'où vient ce projet
