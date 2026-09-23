@@ -1,17 +1,16 @@
-# Tableau de bord PMO mondial — Sanitoral
+# Suivi de 104 projets dans 52 pays — Power BI
 
-Suivi de **104 projets IT et Marketing répartis dans 52 pays**, sous Power BI.
-Beaucoup de données, aucun moyen de les exploiter : le rapport en fait 9 onglets où chaque
-directeur voit son périmètre, et rien d'autre.
+Trois niveaux de direction, un seul rapport : chacun voit son périmètre et reçoit une alerte
+dès qu'un projet dérape de plus de 15 % sur les coûts, les délais ou les livrables.
 
 ![Vue globale](captures/02-vue-globale.png)
 
 ---
 
-## Le besoin
+## Le problème à résoudre
 
-La demande, telle que posée par la cheffe de projet du PMO : rendre les données stratégiques
-des projets accessibles visuellement aux directeurs, et en dégager des axes d'amélioration.
+La demande, posée par la responsable du bureau de gestion de projets : rendre les données
+des projets lisibles par les directeurs, et en dégager des axes d'amélioration.
 Le portefeuille couvre 4 régions, avec deux familles de projets indépendantes : 6 phases pour
 l'IT (A à F), 4 phases pour le Marketing (1 à 4).
 
@@ -23,7 +22,7 @@ Trois profils d'utilisateurs, trois périmètres :
 | Directeur Régional | Uniquement les projets de sa région |
 | Directeur Pays | Uniquement les projets de son pays |
 
-## Les partis pris
+## Les trois choix qui structurent le rapport
 
 **La sécurité est appliquée à la connexion, pas par un filtre.** Le rapport utilise la sécurité
 au niveau des lignes (RLS) sur 3 rôles : les données affichées dépendent de l'identité de
@@ -57,7 +56,7 @@ de Gantt et les infobulles enrichies.
 Une page dédiée alimente les [infobulles de la carte](captures/10-infocarte.png) : pays,
 score de retard et nombre de projets en alerte au survol.
 
-## Ce que le rapport montre
+## Ce que les données disent
 
 - **32 projets en alerte sur 104**, soit 30,8 % du portefeuille
 - **56,11 M$ de budget prévu** contre **60,2 M$ dépensés**
@@ -67,7 +66,7 @@ score de retard et nombre de projets en alerte au survol.
 - Côté familles : **19 alertes Marketing (59 %) contre 13 IT (41 %)**
 - Sur les 52 pays : 25 sous contrôle, 23 en alerte, 4 à surveiller
 
-## Et ce qu'on en fait
+## Ce qu'on en fait
 
 L'onglet Axe d'amélioration ne s'arrête pas au constat. Il propose trois actions chiffrées :
 un audit d'urgence de la Phase D avec blocage des dépenses non validées au-delà de +50 %,
@@ -77,7 +76,7 @@ Objectif affiché : **ramener le taux d'alertes de 30,8 % à moins de 15 %**.
 
 ![Axe d'amélioration](captures/06-axe-amelioration.png)
 
-## Le modèle
+## Comment les données sont organisées
 
 **7 tables sources** issues d'un fichier Excel, organisées en étoile autour de `Projects_plans`
 (clé `Project_ID` + `Project_phase`).
@@ -90,19 +89,19 @@ Objectif affiché : **ramener le taux d'alertes de 30,8 % à moins de 15 %**.
 
 ![Modèle des données](captures/07-modele-donnees.png)
 
-## Stack
+## Outils et techniques
 
 Power BI Desktop · DAX · Power Query · modèle en étoile · sécurité au niveau des lignes ·
 visuel personnalisé (diagramme de Gantt) · page d'infobulle
 
-## Le dépôt
+## Contenu du dépôt
 
 ```
 captures/                              une image par onglet
-tableau-de-bord-pmo-sanitoral.pbix     le rapport, ouvrable dans Power BI Desktop
+suivi-projets-sanitoral.pbix     le rapport, ouvrable dans Power BI Desktop
 ```
 
-## Contexte
+## D'où vient ce projet
 
 Projet réalisé dans le cadre du parcours Data Analyst d'OpenClassrooms, validé en mai 2026.
 Sanitoral est une entreprise fictive : les données sont un jeu pédagogique, aucune donnée
