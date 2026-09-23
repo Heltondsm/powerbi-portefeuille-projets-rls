@@ -25,8 +25,9 @@ Trois profils d'utilisateurs, trois périmètres :
 ## Les trois choix qui structurent le rapport
 
 **La sécurité est appliquée à la connexion, pas par un filtre.** Le rapport utilise la sécurité
-au niveau des lignes (RLS) sur 3 rôles : les données affichées dépendent de l'identité de
-l'utilisateur, qui ne peut pas élargir son périmètre en retirant un filtre.
+au niveau des lignes, ou RLS pour *row-level security* : les données affichées dépendent de
+l'identité de l'utilisateur, qui ne peut pas élargir son périmètre en retirant un filtre.
+Trois rôles sont définis, un par niveau de direction.
 
 **Un seuil d'alerte unique, trois indicateurs.** Un projet passe en alerte dès que l'écart entre
 le prévu et le réel dépasse **15 %** sur les coûts, les durées ou les livrables. Un seul code
