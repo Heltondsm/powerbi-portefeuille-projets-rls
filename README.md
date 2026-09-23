@@ -58,7 +58,7 @@ Concrètement, trois rôles sont définis dans le modèle. Un directeur pays ouv
 
 ---
 
-## 🔍 Ce que les données disent
+## 🔍 Résultats clés
 
 ### 1️⃣ Un seul projet fausse la lecture de tout le portefeuille
 
@@ -100,7 +100,7 @@ La carte de la page Vue Globale existe pour ça. Une liste triée aurait donné 
 
 ---
 
-## 💡 Ce qu'on en fait
+## 💡 Conclusion
 
 Un tableau de bord qui s'arrête au constat laisse la décision à quelqu'un d'autre. L'onglet **Axe d'amélioration stratégique** ne contient aucun graphique : il transforme les trois constats ci-dessus en trois décisions chiffrées.
 
@@ -114,7 +114,7 @@ Objectif affiché : **ramener le taux d'alertes de 30,8 % à moins de 15 %**.
 
 ---
 
-## 🗂️ Comment les données sont organisées
+## 🗂️ Les données
 
 ![Modèle des données](captures/07-modele-donnees.png)
 
@@ -160,25 +160,78 @@ Une [page d'infobulle](captures/10-infocarte.png) dédiée enrichit le survol de
 
 ---
 
-## 🧰 Outils et techniques
 
-Power BI Desktop · DAX · Power Query · modèle en étoile à clé composite · sécurité au niveau des lignes sur 3 rôles · mise en forme conditionnelle par mesures · visuel personnalisé (diagramme de Gantt) · page d'infobulle
+## 🛠️ Technologies utilisées
+
+Power BI Desktop · DAX · Power Query · modèle en étoile à clé composite · sécurité au niveau des lignes (RLS) · mise en forme conditionnelle par mesures · visuel personnalisé (Gantt) · page d'infobulle
 
 ---
+## 🚀 Ouvrir le rapport
 
-## 📁 Contenu du dépôt
+Le fichier `.pbix` s'ouvre avec [Power BI Desktop](https://powerbi.microsoft.com/desktop/), gratuit, sous Windows.
 
 ```
-captures/                              une image par onglet
-portefeuille-projets-sanitoral.pbix    le rapport, ouvrable dans Power BI Desktop
+1. Télécharger portefeuille-projets-sanitoral.pbix
+2. L'ouvrir dans Power BI Desktop
+3. Naviguer depuis la page Accueil, chaque bouton mène à un onglet
+```
+
+Les données sont embarquées dans le fichier : aucune source externe à connecter, aucun identifiant à saisir.
+
+Pour voir la sécurité par rôle en action : **Modélisation → Afficher en tant que**, puis choisir un des 3 rôles. Les agrégats se recalculent sur le périmètre choisi.
+
+---
+## 📂 Structure du dépôt
+
+```
+captures/                              une image par onglet du rapport
+portefeuille-projets-sanitoral.pbix    le rapport complet, données embarquées
 ```
 
 ---
+## 📈 Compétences démontrées
 
-## 🎓 D'où vient ce projet
+### Modélisation
+- ✅ Modèle en étoile à partir de 7 tables plates, sans table de faits préexistante
+- ✅ Clé composite `Project_ID` + `Project_phase` pour relier le réel au planifié phase par phase
+- ✅ Table de mesures isolée du modèle physique
 
-Projet du parcours Data Analyst d'OpenClassrooms, soutenu et validé en mai 2026. Sanitoral est une entreprise fictive : les données sont un jeu pédagogique, aucune donnée réelle n'est publiée ici.
+### Sécurité et gouvernance
+- ✅ Sécurité au niveau des lignes sur 3 rôles, appliquée à la connexion et non par un filtre
+- ✅ Périmètre de chaque directeur défini dans le modèle, impossible à élargir depuis l'interface
+- ✅ Procédure de mise à jour documentée dans le rapport, pour qu'il survive à son auteur
+
+### Restitution
+- ✅ Seuil d'alerte unique à 15 %, appliqué aux 3 indicateurs simultanément
+- ✅ Code couleur porté par des mesures DAX, pas par une mise en forme manuelle
+- ✅ Une page d'analyse sans aucun graphique, qui transforme les constats en 3 décisions chiffrées
+- ✅ Les deux éléments optionnels du cahier des charges livrés : Gantt et infobulles enrichies
+
+### Lecture des données
+- ✅ Écart isolé de +401,3 % identifié comme point aberrant et non comme tendance
+- ✅ Trois indicateurs lus ensemble plutôt que séparément, ce qui inverse la conclusion
+- ✅ Concentration géographique des alertes mise en évidence par la carte, pas par un classement
 
 ---
 
-**Helton Dos Santos Moreira** · [LinkedIn](https://linkedin.com/in/helton-dsm-data) · [GitHub](https://github.com/Heltondsm)
+## 📧 Contact
+
+**Helton Dos Santos Moreira**
+Data Analyst / Data Engineer | 10 ans d'expérience business (retail et e-commerce)
+
+- 📧 Email : heltonmail8@gmail.com
+- 💼 LinkedIn : [in/helton-dsm-data](https://linkedin.com/in/helton-dsm-data)
+- 🐙 GitHub : [Heltondsm](https://github.com/Heltondsm)
+
+---
+
+## 🔗 Autres projets
+
+- [Tendances du streaming musical](https://github.com/Heltondsm/analyse-streaming-musical), 114 000 morceaux, tests statistiques et prévision Prophet comparée à un modèle naïf
+- [Pipeline dbt : profils sociodémographiques](https://github.com/Heltondsm/dbt-demographics-pipeline), Snowflake et DuckDB, 26 tests, reproductible en une commande
+- [Pipeline de veille du marché de l'emploi](https://github.com/Heltondsm/job-market-pipeline), APIs France Travail et INSEE Sirene, 698 offres et 1 166 entreprises en 11 secondes
+- [Audit qualité d'un catalogue e-commerce](https://github.com/Heltondsm/python-audit-donnees-catalogue), croisement de 3 sources, 277 000 € de stock immobilisé mis en évidence
+
+---
+
+**Projet réalisé entre mars et mai 2026**
