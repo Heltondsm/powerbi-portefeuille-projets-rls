@@ -279,7 +279,7 @@ Data Analyst / Data Engineer | 10 ans d'expérience business (retail et e-commer
 - [Tendances du streaming musical](https://github.com/Heltondsm/analyse-streaming-musical), 114 000 morceaux, tests statistiques et prévision Prophet comparée à un modèle naïf
 - [Pipeline dbt : profils sociodémographiques](https://github.com/Heltondsm/dbt-demographics-pipeline), Snowflake et DuckDB, 26 tests, reproductible en une commande
 - [Pipeline de veille du marché de l'emploi](https://github.com/Heltondsm/job-market-pipeline), APIs France Travail et INSEE Sirene, 698 offres et 1 166 entreprises en 11 secondes
-- [Audit qualité d'un catalogue e-commerce](https://github.com/Heltondsm/python-audit-donnees-catalogue), croisement de 3 sources, 277 000 € de stock immobilisé mis en évidence
+- [Audit qualité d'un catalogue e-commerce](https://github.com/Heltondsm/python-audit-donnees-catalogue), croisement de 3 sources, 276 859 € de stock immobilisé mis en évidence
 
 ---
 
