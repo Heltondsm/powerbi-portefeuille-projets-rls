@@ -138,7 +138,54 @@ Une table `Mesures` isole les calculs DAX du reste du modèle. **16 mesures** al
 - **Les alertes** : `Nb Projets En Alerte`, `% Projets En Alerte`, `Statut Pays`, `Score Retard Pays`
 - **Les couleurs conditionnelles** : `Couleur Alerte Globale`, `Couleur Coûts`, `Couleur Durées`, `Couleur Livrables`
 
-Les couleurs sont des mesures, pas une mise en forme manuelle. Le code est appliqué une fois et se propage à tout le rapport : vert sous 10 %, orange entre 10 et 15 %, rouge au-delà.
+Les couleurs sont des mesures, pas une mise en forme cliquée visuel par visuel. Le code à trois niveaux, vert sous 10 %, orange entre 10 et 15 %, rouge au-delà, est porté par `Couleur Coûts`, `Couleur Durées` et `Couleur Livrables`. `Couleur Alerte Globale` est volontairement binaire : un projet est en alerte ou il ne l'est pas.
+
+---
+
+## 🧮 Trois mesures qui portent la logique
+
+### L'écart, avec le zéro traité
+
+```dax
+Écart Coûts % =
+DIVIDE(
+    [Coût Réel Total] - [Coût Planifié Total],
+    [Coût Planifié Total],
+    0
+)
+```
+
+`DIVIDE` plutôt que l'opérateur `/` : un projet sans budget planifié renverrait une erreur qui se propagerait à tout le visuel. Le troisième argument fixe le résultat de repli à 0. Les trois écarts, coûts, durées et livrables, suivent exactement la même forme.
+
+### Le statut d'un pays : un second seuil, à un autre niveau
+
+```dax
+Statut Pays =
+VAR Pct = CALCULATE([% Projets En Alerte])
+RETURN
+SWITCH(TRUE(),
+    Pct < 0.25, "Sous contrôle",
+    Pct < 0.5,  "À surveiller",
+    Pct >= 0.5, "En alerte",
+    "Aucun projet"
+)
+```
+
+C'est ici que se joue la distinction la plus importante du rapport, et elle échappe à la lecture rapide : **il y a deux seuils, à deux niveaux différents.**
+
+- **15 % d'écart** qualifie **un projet** en alerte, sur n'importe lequel des trois indicateurs
+- **La part de projets en alerte** qualifie ensuite **un pays** : moins de 25 % sous contrôle, jusqu'à 50 % à surveiller, au-delà en alerte
+
+Sans ce second seuil, un pays avec un seul projet dérapant passerait rouge sur la carte au même titre qu'un pays où la moitié du portefeuille est en difficulté. Le `SWITCH(TRUE(), ...)` remplace une cascade de `IF` imbriqués : les conditions se lisent de haut en bas, la première vraie l'emporte.
+
+### La couleur comme donnée, pas comme mise en forme
+
+```dax
+Couleur Alerte Globale =
+IF([Nb Projets En Alerte] > 0, "#E84040", "#00B388")
+```
+
+La mesure renvoie un code hexadécimal, branché sur la mise en forme conditionnelle des visuels. Une seule définition, propagée partout : changer la nuance de rouge se fait à un endroit et non sur chaque graphique.
 
 ---
 
@@ -195,6 +242,7 @@ portefeuille-projets-sanitoral.pbix    le rapport complet, données embarquées
 - ✅ Modèle en étoile à partir de 7 tables plates, sans table de faits préexistante
 - ✅ Clé composite `Project_ID` + `Project_phase` pour relier le réel au planifié phase par phase
 - ✅ Table de mesures isolée du modèle physique
+- ✅ `DIVIDE` avec résultat de repli plutôt que l'opérateur de division, pour éviter la propagation d'erreurs
 
 ### Sécurité et gouvernance
 - ✅ Sécurité au niveau des lignes sur 3 rôles, appliquée à la connexion et non par un filtre
@@ -202,7 +250,8 @@ portefeuille-projets-sanitoral.pbix    le rapport complet, données embarquées
 - ✅ Procédure de mise à jour documentée dans le rapport, pour qu'il survive à son auteur
 
 ### Restitution
-- ✅ Seuil d'alerte unique à 15 %, appliqué aux 3 indicateurs simultanément
+- ✅ Deux seuils à deux niveaux : 15 % d'écart qualifie un projet, la part de projets en alerte qualifie un pays
+- ✅ `SWITCH(TRUE(), ...)` plutôt qu'une cascade de `IF` imbriqués
 - ✅ Code couleur porté par des mesures DAX, pas par une mise en forme manuelle
 - ✅ Une page d'analyse sans aucun graphique, qui transforme les constats en 3 décisions chiffrées
 - ✅ Les deux éléments optionnels du cahier des charges livrés : Gantt et infobulles enrichies
