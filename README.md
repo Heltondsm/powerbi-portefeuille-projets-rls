@@ -1,7 +1,7 @@
 # Tableau de bord PMO mondial — Sanitoral
 
-Suivi de **104 projets IT et Marketing répartis dans 53 pays**, sous Power BI.
-Avant : des classeurs Excel envoyés par mail. Après : un rapport de 9 onglets où chaque
+Suivi de **104 projets IT et Marketing répartis dans 52 pays**, sous Power BI.
+Beaucoup de données, aucun moyen de les exploiter : le rapport en fait 9 onglets où chaque
 directeur voit son périmètre, et rien d'autre.
 
 ![Vue globale](captures/02-vue-globale.png)
@@ -10,9 +10,10 @@ directeur voit son périmètre, et rien d'autre.
 
 ## Le besoin
 
-Sanitoral pilotait son portefeuille de projets à partir de fichiers Excel que chaque pays
-renvoyait par mail. Impossible de savoir, à un instant donné, combien de projets dérapaient,
-ni de comparer une région à une autre.
+La demande, telle que posée par la cheffe de projet du PMO : rendre les données stratégiques
+des projets accessibles visuellement aux directeurs, et en dégager des axes d'amélioration.
+Le portefeuille couvre 4 régions, avec deux familles de projets indépendantes : 6 phases pour
+l'IT (A à F), 4 phases pour le Marketing (1 à 4).
 
 Trois profils d'utilisateurs, trois périmètres :
 
@@ -36,6 +37,9 @@ couleur sur tout le rapport : vert sous 10 %, orange entre 10 et 15 %, rouge au-
 documente les indicateurs, le système d'alerte, le filtrage, les accès par rôle et la procédure
 de mise à jour en 5 étapes, pour que le rapport survive à son auteur.
 
+**Deux éléments étaient optionnels dans le cahier des charges, ils sont livrés :** le diagramme
+de Gantt et les infobulles enrichies.
+
 ## Les 9 onglets
 
 | # | Onglet | Contenu |
@@ -50,7 +54,7 @@ de mise à jour en 5 étapes, pour que le rapport survive à son auteur.
 | 8 | [Guide d'utilisation](captures/08-guide-utilisation.png) | Indicateurs, alertes, filtres, rôles, procédure de mise à jour |
 | 9 | [Mise à jour](captures/09-mise-a-jour.png) | Product Strategy Canvas et les 9 user stories d'origine |
 
-Une page masquée alimente les [infobulles de la carte](captures/10-infocarte.png) : pays,
+Une page dédiée alimente les [infobulles de la carte](captures/10-infocarte.png) : pays,
 score de retard et nombre de projets en alerte au survol.
 
 ## Ce que le rapport montre
@@ -61,7 +65,7 @@ score de retard et nombre de projets en alerte au survol.
   suivante la plus dégradée est à +19 %
 - **La région CEMEA concentre 19 des 32 alertes**, dont 12 projets Marketing
 - Côté familles : **19 alertes Marketing (59 %) contre 13 IT (41 %)**
-- 25 pays sous contrôle, 23 en alerte, 4 à surveiller
+- Sur les 52 pays : 25 sous contrôle, 23 en alerte, 4 à surveiller
 
 ## Et ce qu'on en fait
 
@@ -89,7 +93,7 @@ Objectif affiché : **ramener le taux d'alertes de 30,8 % à moins de 15 %**.
 ## Stack
 
 Power BI Desktop · DAX · Power Query · modèle en étoile · sécurité au niveau des lignes ·
-visuels personnalisés (Gantt, radar) · infobulles personnalisées
+visuel personnalisé (diagramme de Gantt) · page d'infobulle
 
 ## Le dépôt
 
