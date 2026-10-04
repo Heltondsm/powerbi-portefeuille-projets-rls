@@ -1,4 +1,4 @@
-# 📊 Portefeuille de 104 projets dans 52 pays : alerter le bon directeur, et lui seul
+# 📊 Pilotage d'un portefeuille de 104 projets : détection des dérives et sécurité des accès
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
 ![DAX](https://img.shields.io/badge/DAX-0078D4?style=flat-square&logo=microsoft&logoColor=white)
@@ -6,7 +6,7 @@
 ![RLS](https://img.shields.io/badge/Row--Level%20Security-3b82f6?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square)
 
-104 projets IT et Marketing, 52 pays, 4 régions, et trois niveaux de direction qui n'ont pas le droit de voir les mêmes lignes. **Le piège de ce projet n'était pas de faire des graphiques : c'était de comprendre qu'un filtre n'est pas une sécurité.**
+104 projets IT et Marketing, 52 pays, 4 régions, et trois niveaux de direction qui n'ont pas le droit de voir les mêmes lignes. **L'enjeu central : garantir que chaque direction ne voie que son périmètre, avec une sécurité au niveau des lignes plutôt qu'un simple filtre.**
 
 ![Vue globale](captures/02-vue-globale.png)
 
