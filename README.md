@@ -35,8 +35,8 @@ Et trois profils lisent le même rapport sans voir la même chose :
 
 ## 🎯 Ce que j'ai fait
 
-- Modélisé **7 tables Excel en étoile** autour d'une table de faits à clé composite
-- Écrit **16 mesures DAX** : les 3 écarts, les compteurs d'alerte, les couleurs conditionnelles, un score de retard par pays
+- Modélisé **7 tables Excel** reliées par une clé composite projet + phase
+- Écrit **25 mesures DAX** : les 3 écarts, les alertes et statuts, les compteurs, les couleurs conditionnelles, un score de retard par pays
 - Mis en place la **sécurité au niveau des lignes sur 3 rôles**, appliquée à l'identité de connexion
 - Construit **9 onglets** dont une page d'analyse qui ne montre pas de données mais propose 3 décisions chiffrées
 - Livré **les deux éléments optionnels du cahier des charges** : diagramme de Gantt et infobulles enrichies
@@ -118,7 +118,7 @@ Objectif affiché : **ramener le taux d'alertes de 30,8 % à moins de 15 %**.
 
 ![Modèle des données](captures/07-modele-donnees.png)
 
-**7 tables sources**, un seul fichier Excel, un modèle en étoile autour de `Projects_plans`.
+**7 tables sources**, un seul fichier Excel, reliées autour de `Projects_plans`.
 
 La table centrale porte une **clé composite** `Project_ID` + `Project_phase`, parce qu'un projet existe en autant de lignes que de phases. C'est cette clé qui permet de relier le réel au planifié phase par phase :
 
@@ -131,12 +131,15 @@ La table centrale porte une **clé composite** `Project_ID` + `Project_phase`, p
 | `Country_Profiles` | *:1 | `Country`, via `Projects_Locations` |
 | `Project type` | 1:1 | `Project_ID`, via `Projects_Locations` |
 
-Une table `Mesures` isole les calculs DAX du reste du modèle. **16 mesures** alimentent les visuels :
+Une table `Mesures` isole les calculs DAX du reste du modèle. **25 mesures** alimentent les visuels :
 
-- **Les agrégats** : `Coût Planifié Total`, `Coût Réel Total`, `Durée Planifiée (h)`, `Nb Projets Total`
+- **Les agrégats** : `Coût Planifié Total`, `Coût Réel Total`, `Durée Planifiée (h)`, `Durée Réelle (h)`, `Livrables Planifiés`, `Livrables Réels`, `Nb Projets Total`, `Nb Projets En Alerte`
 - **Les écarts** : `Écart Coûts %`, `Écart Durées %`, `Écart Livrables %`
-- **Les alertes** : `Nb Projets En Alerte`, `% Projets En Alerte`, `Statut Pays`, `Score Retard Pays`
+- **Les alertes et statuts** : `Alerte Coûts`, `Alerte Durées`, `Alerte Livrables`, `Statut Coûts`, `Statut Durées`, `Statut Livrables`, `Projet En Alerte`, `Statut Projet`, `% Projets En Alerte`
+- **Le score** : `Score Retard Pays`
 - **Les couleurs conditionnelles** : `Couleur Alerte Globale`, `Couleur Coûts`, `Couleur Durées`, `Couleur Livrables`
+
+Deux colonnes calculées complètent le modèle dans `Country_Profiles` : `Statut Pays`, et `Ordre Statut` qui trie les statuts sur la carte.
 
 Les couleurs sont des mesures, pas une mise en forme cliquée visuel par visuel. Le code à trois niveaux, vert sous 10 %, orange entre 10 et 15 %, rouge au-delà, est porté par `Couleur Coûts`, `Couleur Durées` et `Couleur Livrables`. `Couleur Alerte Globale` est volontairement binaire : un projet est en alerte ou il ne l'est pas.
 
@@ -160,6 +163,7 @@ DIVIDE(
 ### Le statut d'un pays : un second seuil, à un autre niveau
 
 ```dax
+-- colonne calculée de la table Country_Profiles
 Statut Pays =
 VAR Pct = CALCULATE([% Projets En Alerte])
 RETURN
@@ -199,7 +203,7 @@ La mesure renvoie un code hexadécimal, branché sur la mise en forme conditionn
 | 4 | [Délais](captures/04-delais.png) | Diagramme de Gantt par phase, retard par phase |
 | 5 | [IT vs Marketing](captures/05-it-vs-marketing.png) | Alertes par pays et par région, comparaison des deux familles |
 | 6 | [Axe d'amélioration](captures/06-axe-amelioration.png) | Constats, recommandations, impact attendu |
-| 7 | [Modèle des données](captures/07-modele-donnees.png) | Le schéma en étoile documenté dans le rapport lui-même |
+| 7 | [Modèle des données](captures/07-modele-donnees.png) | Le modèle de données documenté dans le rapport lui-même |
 | 8 | [Guide d'utilisation](captures/08-guide-utilisation.png) | Indicateurs, alertes, filtres, rôles, procédure de mise à jour |
 | 9 | [Mise à jour](captures/09-mise-a-jour.png) | Le cadrage d'origine et les 9 user stories |
 
@@ -210,7 +214,7 @@ Une [page d'infobulle](captures/10-infocarte.png) dédiée enrichit le survol de
 
 ## 🛠️ Technologies utilisées
 
-Power BI Desktop · DAX · Power Query · modèle en étoile à clé composite · sécurité au niveau des lignes (RLS) · mise en forme conditionnelle par mesures · visuel personnalisé (Gantt) · page d'infobulle
+Power BI Desktop · DAX · Power Query · modèle à clé composite · sécurité au niveau des lignes (RLS) · mise en forme conditionnelle par mesures · visuel personnalisé (Gantt) · page d'infobulle
 
 ---
 ## 🚀 Ouvrir le rapport
@@ -239,7 +243,7 @@ portefeuille-projets-sanitoral.pbix    le rapport complet, données embarquées
 ## 📈 Compétences démontrées
 
 ### Modélisation
-- ✅ Modèle en étoile à partir de 7 tables plates, sans table de faits préexistante
+- ✅ Modèle de données construit à partir de 7 tables plates, relié par une clé composite
 - ✅ Clé composite `Project_ID` + `Project_phase` pour relier le réel au planifié phase par phase
 - ✅ Table de mesures isolée du modèle physique
 - ✅ `DIVIDE` avec résultat de repli plutôt que l'opérateur de division, pour éviter la propagation d'erreurs
@@ -277,9 +281,9 @@ Data Analyst / Data Engineer | 10 ans d'expérience business (retail et e-commer
 ## 🔗 Autres projets
 
 - [Tableau de bord Power BI : aide à la décision sur l'eau potable](https://github.com/Heltondsm/powerbi-aide-decision-eau-potable), 5 sources OMS et FAO, curseur de stabilité politique qui change la recommandation en direct
-- [Tendances du streaming musical](https://github.com/Heltondsm/analyse-streaming-musical), 114 000 morceaux, tests statistiques et prévision Prophet comparée à un modèle naïf
+- [Tendances du streaming musical](https://github.com/Heltondsm/analyse-streaming-musical), 114 000 morceaux, tests statistiques et calendrier de sortie
 - [Pipeline dbt : profils sociodémographiques](https://github.com/Heltondsm/dbt-demographics-pipeline), Snowflake et DuckDB, 26 tests, reproductible en une commande
-- [Pipeline de veille du marché de l'emploi](https://github.com/Heltondsm/job-market-pipeline), APIs France Travail et INSEE Sirene, 698 offres et 1 166 entreprises en 11 secondes
+- [Pipeline de veille du marché de l'emploi](https://github.com/Heltondsm/job-market-pipeline), APIs France Travail et INSEE Sirene, 787 offres et 1 135 entreprises en 14 secondes
 - [Audit qualité d'un catalogue e-commerce](https://github.com/Heltondsm/python-audit-donnees-catalogue), croisement de 3 sources, 276 859 € de stock immobilisé mis en évidence
 
 ---
